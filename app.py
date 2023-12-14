@@ -3,8 +3,10 @@ import json
 import pickle
 import pandas as pd
 from models.movie_recommendation.model import predict
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources={r"*": {"origins": "*"}})
 
 
 def convertJSON(json):
