@@ -203,7 +203,7 @@ def mentalHealthPrediction():
     input_pd = pd.DataFrame(input)
     model = pickle.load(open("./models/mental_health_prediction/model.pkl", "rb"))
     prediction = model.predict(input_pd)
-    mental_fitness = min(max(0, ((prediction[0] - 10) / (10)) * 100), 100)
+    mental_fitness = min(max(0, (prediction[0] / 10) * 100), 100)
     return {"result": mental_fitness}
 
     # {
@@ -219,4 +219,4 @@ def mentalHealthPrediction():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
