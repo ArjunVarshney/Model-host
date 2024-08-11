@@ -197,11 +197,31 @@ def carPricePrediction():
 # }
 
 
-@app.route("/mental-health-prediction", methods=["POST"])
+@app.route("/mental-health-prediction-rfr", methods=["POST"])
 def mentalHealthPrediction():
     input = convertJSON(request.json)
     input_pd = pd.DataFrame(input)
-    model = pickle.load(open("./models/mental_health_prediction/model.pkl", "rb"))
+    model = pickle.load(open("./models/mental_health_prediction/model_rfr.pkl", "rb"))
+    prediction = model.predict(input_pd)
+    mental_fitness = min(max(0, (prediction[0] / 10) * 100), 100)
+    return {"result": mental_fitness}
+
+    # {
+    #     "Year": 2024,
+    #     "Schizophrenia": 0.9,
+    #     "Bipolar_disorder": 5,
+    #     "Eating_disorder": 12,
+    #     "Anxiety": 15,
+    #     "drug_usage": 2,
+    #     "depression": 15,
+    #     "alcohol": 15,
+    # }
+
+@app.route("/mental-health-prediction-lr", methods=["POST"])
+def mentalHealthPredictionLr():
+    input = convertJSON(request.json)
+    input_pd = pd.DataFrame(input)
+    model = pickle.load(open("./models/mental_health_prediction/model_lr.pkl", "rb"))
     prediction = model.predict(input_pd)
     mental_fitness = min(max(0, (prediction[0] / 10) * 100), 100)
     return {"result": mental_fitness}
